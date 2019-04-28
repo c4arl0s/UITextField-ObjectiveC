@@ -15,5 +15,18 @@ viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundl
 self.window.rootViewController = viewController;
 [self.window makeKeyAndVisible];
 ```
+# UIResponder
+
+- UIView
+- UIViewController
+- UIApplication
+
+### The UIWindow has a pointer called firstResponder which indicates who should respond to the other type of events.
+
+
+
+- when you select a textField, the window moves its firstResponder pointer to that text field.
+- Motion and remote controls events are sent to the first responder.
+
 
 
