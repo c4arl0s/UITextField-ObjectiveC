@@ -115,6 +115,8 @@ self.window.rootViewController = viewController;
 @end
 ```
 
+![Captura de Pantalla 2019-04-28 a la(s) 18 39 07](https://user-images.githubusercontent.com/24994818/56871534-97157c00-69dc-11e9-8963-95453c74594b.png)
+
 # Adding labels to the screen
 
 ``` objective-c
