@@ -222,3 +222,5 @@ self.window.rootViewController = viewController;
 @end
 ```
 
+![Captura de Pantalla 2019-04-28 a la(s) 18 30 09](https://user-images.githubusercontent.com/24994818/56871495-f9ba4800-69db-11e9-803a-cf3aed804afe.png)
+![Captura de Pantalla 2019-04-28 a la(s) 18 30 13](https://user-images.githubusercontent.com/24994818/56871497-fb840b80-69db-11e9-9c20-9997fd9b6391.png)
