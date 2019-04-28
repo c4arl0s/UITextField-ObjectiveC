@@ -27,6 +27,5 @@ self.window.rootViewController = viewController;
 
 - when you select a textField, the window moves its firstResponder pointer to that text field.
 - Motion and remote controls events are sent to the first responder.
-
-
+- Most views refuse to become first responder; they do not want to steal focus from the currently selected text field or text view.
 
