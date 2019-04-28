@@ -23,7 +23,7 @@ self.window.rootViewController = viewController;
 
 ### The UIWindow has a pointer called firstResponder which indicates who should respond to the other type of events.
 
-
+![Captura de Pantalla 2019-04-28 a la(s) 12 36 34](https://user-images.githubusercontent.com/24994818/56868016-fc03ae80-69a9-11e9-9796-e0f628cbf9c3.png)
 
 - when you select a textField, the window moves its firstResponder pointer to that text field.
 - Motion and remote controls events are sent to the first responder.
