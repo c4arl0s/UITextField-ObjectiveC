@@ -14,37 +14,41 @@
 // about the information.
 
 @interface ViewController () <UITextFieldDelegate>
-@end
-
-@implementation ViewController
 {
     UITextField *textField;
 }
+@end
 
-- (void)viewDidLoad {
+@implementation ViewController
+
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    [self settingTextField];
+    [self setTextField];
 }
 
-- (void)settingTextField
+- (void)setTextField
 {
-    CGFloat widthTextField = 300;
-    CGFloat heightTextField = 100;
-    CGFloat abscissaCenteredTextField = self.view.frame.size.width/2 - widthTextField/2;
-    CGFloat ordinateCenteredTextField = self.view.frame.size.height/2 - heightTextField/2;
-    CGRect textFieldRect = CGRectMake(abscissaCenteredTextField,
-                                      ordinateCenteredTextField,
-                                      widthTextField,
-                                      heightTextField);
-    textField = [[UITextField alloc] initWithFrame:textFieldRect];
+    CGRect textFieldCenteredRect = [self setCenteredTextFieldWithWidth:300 textFieldHeight:30];
+    textField = [[UITextField alloc] initWithFrame: textFieldCenteredRect];
+    
     // Setting the borderStyle on the text field will allow us to see it more easely.
-    textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.placeholder = @"Write something";
-    textField.returnKeyType = UIReturnKeyDone;
-    textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    [self setTextFieldBorder:UITextBorderStyleRoundedRect placeHolder:@"write something" returnKeyType:UIReturnKeyDone autocapitalizationType:UITextAutocapitalizationTypeWords];
+    
+    // set delegate
     textField.delegate = self;
+    
+    // target-action pattern
+    [textField addTarget:self action: @selector(keyboardReturnKey) forControlEvents:UIControlEventPrimaryActionTriggered];
+    [textField addTarget:self action: @selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+    
+    // add the textfield to the view hierarchy
     [self.view addSubview:textField];
 }
+
+// MARK: UITextField Delegate methods
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([textField.text isEqualToString:@""]) {
@@ -82,21 +86,67 @@
 - (void)drawHypnoticMessage:(NSString *)message
 {
     for (int i=0; i<20; i++) {
-        UILabel *messageLabel = [[UILabel alloc] init];
-        messageLabel.backgroundColor = [UIColor clearColor];
-        messageLabel.textColor = [UIColor blackColor];
-        messageLabel.text = message;
-        [messageLabel sizeToFit];
-        int width = self.view.bounds.size.width - messageLabel.bounds.size.width;
-        int x = arc4random() % width;
-        int height = self.view.bounds.size.height - messageLabel.bounds.size.height;
-        int y = arc4random() % height;
-        
-        CGRect frame = messageLabel.frame;
-        frame.origin = CGPointMake(x, y);
-        messageLabel.frame = frame;
-        
+        UILabel *messageLabel = [self createLabelWithMessage:message];
         [self.view addSubview:messageLabel];
     }
 }
+
+- (UILabel *)createLabelWithMessage:(NSString *)message
+{
+    UILabel *messageLabel = [[UILabel alloc] init];
+    messageLabel.backgroundColor = [UIColor clearColor];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.text = message;
+    [messageLabel sizeToFit];
+    int width = self.view.bounds.size.width - messageLabel.bounds.size.width;
+    int x = arc4random() % width;
+    int height = self.view.bounds.size.height - messageLabel.bounds.size.height;
+    int y = arc4random() % height;
+    
+    CGRect frame = messageLabel.frame;
+    frame.origin = CGPointMake(x, y);
+    messageLabel.frame = frame;
+    return messageLabel;
+}
+
+// MARK: selectors
+
+- (void)keyboardReturnKey
+{
+    NSLog(@"return key pressed");
+    if ([textField.text isEqualToString:@""])
+    {
+        NSLog(@"You didn't tapped anything, type something");
+    }
+    else
+    {
+        NSLog(@"You pressed enter and typed: %@", textField.text);
+    }
+}
+
+-(void)textChanged
+{
+    NSLog(@"text changed");
+    NSLog(@"you typed: %@", textField.text);
+}
+
+-(CGRect)setCenteredTextFieldWithWidth:(CGFloat)widthTextField textFieldHeight:(CGFloat)heightTextField
+{
+    CGFloat abscissaCenteredTextField = self.view.frame.size.width/2 - widthTextField/2;
+    CGFloat ordinateCenteredTextField = self.view.frame.size.height/2 - heightTextField/2;
+    CGRect textFieldRect = CGRectMake(abscissaCenteredTextField,
+                                      ordinateCenteredTextField,
+                                      widthTextField,
+                                      heightTextField);
+    return textFieldRect;
+}
+
+-(void)setTextFieldBorder:(UITextBorderStyle)textBorderStyle placeHolder:(NSString *)placeHolder returnKeyType:(UIReturnKeyType)returnKeyType autocapitalizationType:(UITextAutocapitalizationType)autocapitalizationType
+{
+    textField.borderStyle = textBorderStyle;//UITextBorderStyleRoundedRect;
+    textField.placeholder = placeHolder;//@"Write something";
+    textField.returnKeyType = returnKeyType;//UIReturnKeyDone;
+    textField.autocapitalizationType = autocapitalizationType;//UITextAutocapitalizationTypeWords;
+}
+
 @end
